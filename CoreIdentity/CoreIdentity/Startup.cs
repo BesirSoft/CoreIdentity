@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreIdentity.Infstracter;
 using CoreIdentity.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,7 @@ namespace CoreIdentity
 
 
             services.AddDbContext<AppkicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IPasswordValidator<AplicationUser>, CustomPasswordValidetor> ();
             services.AddIdentity<AplicationUser, IdentityRole>(options => {
 
 
