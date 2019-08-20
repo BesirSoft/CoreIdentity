@@ -23,5 +23,27 @@ namespace CoreIdentity.Controllers
 
             return View(userManger.Users);
         }
+
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+
+
+
+            return View(userManger.Users);
+        }
+
+
+
+        //[HttpPost]
+        //public IActionResult Create()
+        //{
+
+
+
+        //    return View(userManger.Users);
+        //}
     }
 }
