@@ -40,12 +40,13 @@ namespace CoreIdentity
             });
 
 
-
+            //Login olma controlerini ayarlama
+            //services.ConfigureApplicationCookie(opt => opt.LoginPath = "/Member/Login");
             services.AddDbContext<AppkicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IPasswordValidator<AplicationUser>, CustomPasswordValidetor> ();
             services.AddTransient<IUserValidator<AplicationUser>, CostomUserValidator>();
             services.AddIdentity<AplicationUser, IdentityRole>(options => {
-
+        
                /// options.User.AllowedUserNameCharacters = "*";
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
