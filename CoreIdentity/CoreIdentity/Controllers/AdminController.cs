@@ -26,26 +26,17 @@ namespace CoreIdentity.Controllers
         public IActionResult Index()
         {
 
-           
-
             return View(userManger.Users);
         }
-
-
 
         [HttpGet]
         public IActionResult Create()
         {
 
 
-
             return View();
         }
 
-
-   
-
-      
 
         [HttpPost]
         public   async Task< IActionResult > Create(RegisterModel model)
@@ -71,9 +62,6 @@ namespace CoreIdentity.Controllers
                     } 
                    
                 }
-
-
-
 
             }
 
@@ -117,9 +105,6 @@ namespace CoreIdentity.Controllers
             return View("Index", userManger.Users);
         }
 
-
-
-
         [HttpGet]
         public async Task<IActionResult> Update(string Id)
         {
@@ -127,31 +112,15 @@ namespace CoreIdentity.Controllers
 
             if (user !=null)
             {
-
-
-
                 return View(user);
-
-
-
             }
             else
             {
 
-
                 return RedirectToAction("Index");
 
             }
-
-
-
         }
-
-
-
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> Update(string Id, string Password, string Email )
@@ -161,16 +130,11 @@ namespace CoreIdentity.Controllers
             if (user != null)
             {
 
-
-
                 user.Email = Email;
                 IdentityResult validPass=null;
-
                 if (!string.IsNullOrEmpty(Password))
                 {
                     validPass = await paswordValidator.ValidateAsync(userManger,user, Password);
-
-
                     if (validPass.Succeeded)
                     {
                         user.PasswordHash = paswordHassher.HashPassword(user, Password);
@@ -188,15 +152,10 @@ namespace CoreIdentity.Controllers
                  }
 
 
-
-
-
                 if (validPass.Succeeded)
                 {
 
                     var result = await userManger.UpdateAsync(user);
-
-
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index");
@@ -211,27 +170,14 @@ namespace CoreIdentity.Controllers
 
                 }
 
-
-               
-
-
             }
             else
             {
-
-
                 ModelState.AddModelError("","user NotFound");
-
             }
-
 
             return View(user);
         }
-
-
-
-
-
 
     }
 }
