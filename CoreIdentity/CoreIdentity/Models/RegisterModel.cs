@@ -9,12 +9,18 @@ namespace CoreIdentity.Models
     public class RegisterModel
     {
         [Required]
-        public string Name { get; set; }
-        [Required]
         [Display(Name = "Kullanıcı Adı:")]
+
         public string UserName { get; set; }
+
         [Required]
+        [Display(Name = "Email:")]
         public string Email { get; set; }
 
+
+        [Required]
+        [Display(Name = "Şifre:")]
+        public string Password { get; set; }
+        
     }
 }

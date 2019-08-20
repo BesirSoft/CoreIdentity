@@ -32,18 +32,43 @@ namespace CoreIdentity.Controllers
 
 
 
-            return View(userManger.Users);
+            return View();
         }
 
 
 
-        //[HttpPost]
-        //public IActionResult Create()
-        //{
+        [HttpPost]
+        public   async Task< IActionResult > Create(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AplicationUser user = new AplicationUser();
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                var result = await userManger.CreateAsync(user, model.Password);
+
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("",item.Description);
+                    } 
+                   
+                }
 
 
 
-        //    return View(userManger.Users);
-        //}
+
+            }
+
+
+            return View(model);
+        }
     }
 }
