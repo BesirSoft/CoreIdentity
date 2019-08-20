@@ -45,7 +45,7 @@ namespace CoreIdentity
             services.AddTransient<IPasswordValidator<AplicationUser>, CustomPasswordValidetor> ();
             services.AddIdentity<AplicationUser, IdentityRole>(options => {
 
-
+               /// options.User.AllowedUserNameCharacters = "*";
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
