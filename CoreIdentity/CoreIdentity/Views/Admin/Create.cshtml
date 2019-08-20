@@ -1,7 +1,25 @@
-﻿
+﻿@model RegisterModel
+
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
+<div class="bg-primary text-white p-1 m-1">
+
+    <h1>Create User</h1>
+</div>
+
+
+<form action="Create" method="post">
+
+
+    <div class="form-group">
+
+        <label asp-for="Name"></label>
+        <input  asp-for="Name"/>
+
+    </div>
+
+
+</form>
