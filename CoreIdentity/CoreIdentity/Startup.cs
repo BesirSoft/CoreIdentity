@@ -81,6 +81,7 @@ namespace CoreIdentity
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseStatusCodePages();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
