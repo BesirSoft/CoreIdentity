@@ -42,7 +42,7 @@ namespace CoreIdentity
 
             services.AddDbContext<AppkicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AplicationUser, IdentityRole>().AddEntityFrameworkStores<AppkicationIdentityDbContext>().AddDefaultTokenProviders();
-                .
+                
                 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
