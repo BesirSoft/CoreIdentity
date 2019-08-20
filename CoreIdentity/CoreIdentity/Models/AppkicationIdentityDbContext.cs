@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace CoreIdentity.Models
     {
 
 
+        public AppkicationIdentityDbContext(DbContextOptions<AppkicationIdentityDbContext> options):base(options)
+        {
 
+        }
 
     }
 }
