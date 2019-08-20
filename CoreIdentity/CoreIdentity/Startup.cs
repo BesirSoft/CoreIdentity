@@ -41,7 +41,18 @@ namespace CoreIdentity
 
 
             services.AddDbContext<AppkicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<AplicationUser, IdentityRole>().AddEntityFrameworkStores<AppkicationIdentityDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<AplicationUser, IdentityRole>(options => {
+
+
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+
+            
+                      })
+                .AddEntityFrameworkStores<AppkicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
                 
                 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
