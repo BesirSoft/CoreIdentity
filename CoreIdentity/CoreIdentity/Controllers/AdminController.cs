@@ -12,9 +12,16 @@ namespace CoreIdentity.Controllers
     {
         private UserManager<AplicationUser> userManger;
 
-        public AdminController(UserManager<AplicationUser> _userManger)
+        private IPasswordValidator<AplicationUser> paswordValidator;
+
+        private IPasswordHasher<AplicationUser> paswordHassher;
+
+        public AdminController(UserManager<AplicationUser> _userManger, IPasswordValidator<AplicationUser> _paswordValidator, IPasswordHasher<AplicationUser> _paswordHassher)
         {
             userManger = _userManger;
+            paswordValidator = _paswordValidator;
+            paswordHassher = _paswordHassher;
+
         }
         public IActionResult Index()
         {
@@ -113,10 +120,113 @@ namespace CoreIdentity.Controllers
 
 
 
+        [HttpGet]
+        public async Task<IActionResult> Update(string Id)
+        {
+            var user = await userManger.FindByIdAsync(Id);
+
+            if (user !=null)
+            {
+
+
+
+                return View(user);
+
+
+
+            }
+            else
+            {
+
+
+                return RedirectToAction("Index");
+
+            }
+
+
+
+        }
 
 
 
 
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(string Id, string Password, string Email )
+        {
+            var user = await userManger.FindByIdAsync(Id);
+
+            if (user != null)
+            {
+
+
+
+                user.Email = Email;
+                IdentityResult validPass=null;
+
+                if (!string.IsNullOrEmpty(Password))
+                {
+                    validPass = await paswordValidator.ValidateAsync(userManger,user, Password);
+
+
+                    if (validPass.Succeeded)
+                    {
+                        user.PasswordHash = paswordHassher.HashPassword(user, Password);
+
+
+                    }
+                    else
+                    {
+                        foreach (var item in validPass.Errors)
+                        {
+                            ModelState.AddModelError("", item.Description);
+                        }
+
+                    }
+                 }
+
+
+
+
+
+                if (validPass.Succeeded)
+                {
+
+                    var result = await userManger.UpdateAsync(user);
+
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        foreach (var item in validPass.Errors)
+                        {
+                            ModelState.AddModelError("", item.Description);
+                        }
+                    }
+
+                }
+
+
+               
+
+
+            }
+            else
+            {
+
+
+                ModelState.AddModelError("","user NotFound");
+
+            }
+
+
+            return View(user);
+        }
 
 
 

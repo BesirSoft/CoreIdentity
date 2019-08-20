@@ -1,4 +1,4 @@
-﻿@model CoreIdentity.Models.RegisterModel
+﻿@model AplicationUser
 
 @{
     ViewData["Title"] = "Update";
@@ -13,19 +13,19 @@
         <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control"   disabled/>
+             
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+               
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label for="Password" class="control-label"></label>
+                <input name="Password" class="form-control" />
+             
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
