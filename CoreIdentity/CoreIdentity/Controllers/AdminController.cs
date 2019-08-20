@@ -36,6 +36,9 @@ namespace CoreIdentity.Controllers
         }
 
 
+   
+
+      
 
         [HttpPost]
         public   async Task< IActionResult > Create(RegisterModel model)
@@ -70,5 +73,55 @@ namespace CoreIdentity.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public  async Task < IActionResult> Delete( string id)
+        {
+            var user = await userManger.FindByIdAsync(id);
+            if (user !=null)
+            {
+                var result = await userManger.DeleteAsync(user);
+
+
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("",item.Description);
+                    }
+
+                }
+
+            }
+            else
+            {
+
+                ModelState.AddModelError("", "user not found");
+
+
+            }
+
+            return View("Index", userManger.Users);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
