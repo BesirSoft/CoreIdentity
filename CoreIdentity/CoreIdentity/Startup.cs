@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreIdentity.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,6 +39,11 @@ namespace CoreIdentity
             });
 
 
+
+            services.AddDbContext<AppkicationIdentityDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<AplicationUser, IdentityRole>().AddEntityFrameworkStores<AppkicationIdentityDbContext>().AddDefaultTokenProviders();
+                .
+                
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -54,6 +62,7 @@ namespace CoreIdentity
             }
 
             app.UseHttpsRedirection();
+            app.UseBrowserLink();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseStatusCodePages();
