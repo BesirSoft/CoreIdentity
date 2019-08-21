@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreIdentity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace CoreIdentity.Controllers
     {
 
         private RoleManager<IdentityRole> rolManager;
+        private UserManager<AplicationUser> userManager;
 
-        public AdminRoleController(RoleManager<IdentityRole> _rolManager)
+        public AdminRoleController(RoleManager<IdentityRole> _rolManager, UserManager<AplicationUser> _userManager)
         {
             rolManager = _rolManager;
+            userManager = _userManager;
         }
 
 
@@ -52,6 +55,47 @@ namespace CoreIdentity.Controllers
             }
             return View(Rolname);
         }
+
+
+
+        public async Task<IActionResult> Edit(string id)
+        {
+
+            IdentityRole role = await rolManager.FindByIdAsync(id);
+
+            var mebers = new List<AplicationUser>();
+            var nonmebers = new List<AplicationUser>();
+
+
+            foreach (var user in userManager.Users)
+            {
+                var list = await userManager.IsInRoleAsync(user, role.Name)    ? mebers: nonmebers;
+
+
+
+                list.Add(user);
+
+            }
+
+            var model = new RoleDetails()
+
+            {
+                Role = role,
+                Mebers = mebers,
+                NonMebers = nonmebers
+
+
+
+            };
+            
+            return View(model);
+        }
+
+
+
+
+
+
 
 
         [HttpPost]

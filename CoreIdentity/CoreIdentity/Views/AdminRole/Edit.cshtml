@@ -1,0 +1,121 @@
+﻿@model CoreIdentity.Models.RoleDetails
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RoleDetails</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        
+        
+        
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" value="Save" name="@Model.Role.Id" />
+            <input type="hidden" value="Save" name="@Model.Role.Name" />
+
+
+
+
+
+
+            <h6 class="badge-info p-1 text-white">
+
+                Add to @Model.Role.Name
+            </h6>
+
+
+            <table class="table table-bordered table-sm">
+                @if (Model.NonMebers.Count()==0)
+                {
+                    <tr>
+                        <td colspan="2">Kullanıcı yok</td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var user in Model.NonMebers)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="IdsToAdd" value="@user.Id" />
+
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+
+            </table>
+
+
+            <h6 class="badge-info p-1 text-white">
+
+                Add to @Model.Role.Name
+            </h6>
+
+            <table class="table table-bordered table-sm">
+                @if (Model.Mebers.Count()==0)
+                {
+                    <tr>
+                        <td colspan="2">Kullanıcı yok</td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var user in Model.Mebers)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="IdsToDelete" value="@user.Id" />
+
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+
+            </table>
+
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
