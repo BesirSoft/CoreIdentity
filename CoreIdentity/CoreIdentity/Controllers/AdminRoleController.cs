@@ -81,8 +81,8 @@ namespace CoreIdentity.Controllers
 
             {
                 Role = role,
-                Mebers = mebers,
-                NonMebers = nonmebers
+                Members = mebers,
+                NonMembers = nonmebers
 
 
 
@@ -91,6 +91,61 @@ namespace CoreIdentity.Controllers
             return View(model);
         }
 
+        [HttpPost]
+
+        public async Task<IActionResult> Edit(RoleEditModel model)
+        {
+            IdentityResult result;
+
+            if (ModelState.IsValid)
+            {
+                foreach (var userId in model.IdsToAdd ?? new string[] { })
+                {
+                    var user = await userManager.FindByIdAsync(userId);
+
+                    if (user != null)
+                    {
+                        result = await userManager.AddToRoleAsync(user, model.RoleName);
+
+                        if (!result.Succeeded)
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var userId in model.IdsToDelete ?? new string[] { })
+                {
+                    var user = await userManager.FindByIdAsync(userId);
+
+                    if (user != null)
+                    {
+                        result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+
+                        if (!result.Succeeded)
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Edit", model.RoleId);
+            }
+        }
 
 
 

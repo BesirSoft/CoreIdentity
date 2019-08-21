@@ -8,26 +8,17 @@ namespace CoreIdentity.Models
 {
     public class RoleDetails
     {
-
         public IdentityRole Role { get; set; }
-
-        
-        public IEnumerable<AplicationUser> Mebers { get; set; }
-
-        public IEnumerable<AplicationUser> NonMebers { get; set; }
-
-
-
+        public IEnumerable<AplicationUser> Members { get; set; }
+        public IEnumerable<AplicationUser> NonMembers { get; set; }
     }
 
-        public class RoleEditModel
-         {
-            public string RoleId { get; set; }
+    public class RoleEditModel
+    {
+        public string RoleId { get; set; }
         public string RoleName { get; set; }
+
         public string[] IdsToAdd { get; set; }
         public string[] IdsToDelete { get; set; }
-
-
-
     }
 }       
