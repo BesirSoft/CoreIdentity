@@ -6,6 +6,13 @@
     <h2>Role List</h2>
 </div>
 
+@if (TempData["message"] !=null)
+{
+<div class="alert text-danger" >  @TempData["message"]        </div>
+    
+    
+}
+
 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 
 <table class="table table-bordered table-striped table-sm m-1 p-1">

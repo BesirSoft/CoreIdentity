@@ -54,6 +54,48 @@ namespace CoreIdentity.Controllers
         }
 
 
+        [HttpPost]
+
+        public async Task< IActionResult> Delete(string id)
+        {
+            var role = await rolManager.FindByIdAsync(id);
+
+
+
+            if (role !=null)
+            {
+                var result = await rolManager.DeleteAsync(role);
+
+
+                if (result.Succeeded)
+                {
+
+                    TempData["message"] = $"{role} has been delete.";
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+
+             
+
+            }
+
+
+            return RedirectToAction("Index");
+
+
+
+
+
+
+        }
+
 
 
     }
