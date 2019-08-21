@@ -15,8 +15,17 @@ namespace CoreIdentity.Controllers
     {
 
 
-     [Authorize]
+   
         public IActionResult Index()
+        {
+            return View();
+        }
+
+
+
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Sample()
         {
             return View();
         }

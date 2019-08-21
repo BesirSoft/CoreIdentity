@@ -69,5 +69,17 @@ namespace CoreIdentity.Controllers
         }
 
 
+
+        public async Task<IActionResult> Logout()
+        {
+            await signinManger.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
     }
 }
